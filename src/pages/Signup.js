@@ -2,10 +2,14 @@ import React, {useEffect, useState} from 'react';
 import FormContainer from "../components/FormContainer";
 import {Button, Col, Container, Form, Row} from "react-bootstrap";
 import {useNavigate} from "react-router-dom";
+import {useForm} from "react-hook-form";
+import useSignupUser from "../services/signupUser";
 
 const Signup = () => {
 
     const navigate = useNavigate()
+    const {register, handleSubmit } = useForm()
+    const {data, isLoading, error, mutateAsync} = useSignupUser()
 
     const [users, setUsers] = useState([]);
     const userData = [
@@ -15,6 +19,17 @@ const Signup = () => {
         { name: "개인정보 마케팅 활용 동의" },
         { name: "이벤트, 쿠폰, 특가 알림 메일 및 SMS 등 수신" }
     ];
+
+    const onSubmit = async (values) => {
+        const userInput = {
+            ...values,
+            provider: "local"
+        }
+        console.log("++++++++++++++++",userInput)
+        await mutateAsync(userInput)
+        navigate("/login")
+    }
+
     useEffect(() => {
         setUsers(userData)
     },[navigate])
@@ -48,68 +63,76 @@ const Signup = () => {
                     </Row>
                 </Container>
                 <br/>
-                <Form.Group controlId="formName">
-                    <Form.Label>Name</Form.Label>
-                    <Form.Control
-                        type="text"
-                        placeholder="이름을 입력하세요"
-                    />
-                </Form.Group>
-                <br/>
-                    <Form.Group controlId="exampleForm.ControlInput1">
-                        <Form.Label>Email address</Form.Label>
-                        <Form.Control type="email" placeholder="name@example.com" />
-                    </Form.Group>
-                <Button  variant="primary"  className="w-100 mt-4 mb-3">
-                    인증하기
-                </Button>
-                {/*<Form.Control*/}
-                {/*    type="text"*/}
-                {/*    placeholder="인증코드"*/}
-                {/*/>*/}
-                {/*<Button  variant="primary" className="w-100 mt-4 mb-3">*/}
-                {/*    인증번호 입력*/}
-                {/*</Button>*/}
-
-                <Form.Group  className={"mt-4"} controlId="formPassword">
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type="password"
-                        placeholder="Password"
-                    />
-                </Form.Group>
-                <br/>
-                <br/>
-                <form className="form w-100">
-                    <div className="form-check">
-                        <input
-                            type="checkbox"
-                            className="form-check-input"
-                            name="allSelect"
-                            // checked={
-                            //   users.filter((user) => user?.isChecked !== true).length < 1
-                            // }
-                            checked={!users.some((user) => user?.isChecked !== true)}
-                            onChange={handleChange}
+                <Form onSubmit={handleSubmit(onSubmit)}>
+                    <Form.Group controlId="formName">
+                        <Form.Label>Name</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder='이름을 입력하세요'
+                            {...register("name", {required: true})}
                         />
-                        <label className="form-check-label ms-2">All Select</label>
-                    </div>
-                    {users.map((user, index) =>(
-                        <Container className="form-check" key={index}>
+                    </Form.Group>
+                    <br/>
+                        <Form.Group controlId="exampleForm.ControlInput1">
+                            <Form.Label>Email address</Form.Label>
+                            <Form.Control
+                                type="email"
+                                placeholder="name@example.com"
+                                {...register("email", {required: true})}
+                            />
+                        </Form.Group>
+                    <Button  variant="primary"  className="w-100 mt-4 mb-3">
+                        인증하기
+                    </Button>
+                    {/*<Form.Control*/}
+                    {/*    type="text"*/}
+                    {/*    placeholder="인증코드"*/}
+                    {/*/>*/}
+                    {/*<Button  variant="primary" className="w-100 mt-4 mb-3">*/}
+                    {/*    인증번호 입력*/}
+                    {/*</Button>*/}
+
+                    <Form.Group  className={"mt-4"} controlId="formPassword">
+                        <Form.Label>Password</Form.Label>
+                        <Form.Control
+                            type="password"
+                            placeholder="Password"
+                            {...register("password", {required: true})}
+                        />
+                    </Form.Group>
+                    <br/>
+                    <br/>
+                    <form className="form w-100">
+                        <div className="form-check">
                             <input
                                 type="checkbox"
                                 className="form-check-input"
-                                name={user.name}
-                                checked={user?.isChecked || false}
+                                name="allSelect"
+                                // checked={
+                                //   users.filter((user) => user?.isChecked !== true).length < 1
+                                // }
+                                checked={!users.some((user) => user?.isChecked !== true)}
                                 onChange={handleChange}
                             />
-                            <label className="form-check-label ms-2">{user.name}</label>
-                        </Container>
-                    ))}
-                </form>
-                <Button variant="primary" className="w-100 mt-4">
-                    Submit
-                </Button>
+                            <label className="form-check-label ms-2">All Select</label>
+                        </div>
+                        {users.map((user, index) =>(
+                            <Container className="form-check" key={index}>
+                                <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name={user.name}
+                                    checked={user?.isChecked || false}
+                                    onChange={handleChange}
+                                />
+                                <label className="form-check-label ms-2">{user.name}</label>
+                            </Container>
+                        ))}
+                    </form>
+                    <Button variant="primary" className="w-100 mt-4" type={"submit"}>
+                        Submit
+                    </Button>
+                </Form>
 
                 <Container>
                     <br/>

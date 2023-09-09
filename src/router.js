@@ -3,8 +3,9 @@ import Main from "./pages/Main"
 import ProductDetail from "./pages/ProductDetail";
 import Signup from "./pages/Signup";
 import Login from "./pages/Login";
-import RegisterProduct from "./pages/RegisterProduct";
-import NewPassword from "./pages/NewPassword"
+import FindPassword from "./pages/FindPassword"
+import ProductRegister from "./pages/ProductRegister";
+import PasswordChagne from "./pages/PasswordChagne";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -23,12 +24,16 @@ const router = createBrowserRouter([
         element: <ProductDetail/>
     },
     {
-        path:"/register/product",
-        element: <RegisterProduct/>
+        path:"/forgot/password",
+        element: <FindPassword/>
     },
     {
-        path:"/NewPassword",
-        element: <NewPassword/>
+        path:"/productRegister",
+        element: <ProductRegister/>
+    },
+    {
+        path:"/change/password",
+        element: <PasswordChagne/>
     }
 ])
 export default router

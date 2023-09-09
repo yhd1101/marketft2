@@ -13,7 +13,7 @@ const Header = () => {
                         </Nav>
                         <Nav>
                             <Nav.Link href="#deets">Selling</Nav.Link>
-                            <Nav.Link >Product Post</Nav.Link>
+                            <Nav.Link href={"/productRegister"}>Product Post</Nav.Link>
                             <Nav.Link>
                                 Job
                             </Nav.Link>

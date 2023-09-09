@@ -4,4 +4,9 @@ const productApi = axios.create({
     baseURL: "http://localhost:8000/api/product"
 })
 
-export default productApi
+
+const authApi = axios.create({
+    baseURL: "http://localhost:8000/api/auth"
+})
+
+export  {productApi, authApi}
