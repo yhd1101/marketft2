@@ -1,9 +1,10 @@
 import React from 'react';
-import {Button, Card, Carousel, Col, Container, Row, Stack} from "react-bootstrap";
+import {Badge, Button, Card, Carousel, Col, Container, Row, Stack} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import {useFetchProducts} from "../services/fetchProducts";
 
 const Main = () => {
-    const data = 1
+    const { data: products, isLoading, error } = useFetchProducts()
     return (
     <>
         <Carousel>
@@ -52,28 +53,40 @@ const Main = () => {
         <Container className={"mt-5"}>
             <Row>
                 <h1 className={"mb-3"}>전체상품</h1>
-                <Col className={"mt-5"}>
-                    <Card style={{ width: '18rem' }}>
-                        <Card.Img variant="top" style={{height: '250px', width: '100%'} }/>
-                        <Card.Body>
-                            <Card.Title>생품</Card.Title>
-                            <Card.Text>
-                                상품입니다.
-                            </Card.Text>
-                            <Stack direction="horizontal" className={"me-lg-2"}>
-                                <div style={{margin: "3px"}} >
-                                    <h4>
-                                       ㅇㅇ
-                                    </h4>
-                                </div>
-                            </Stack>
-                            <Link to={`/product/${data}`}>
-                                <Button>Go Detail</Button>
-                            </Link>
-                        </Card.Body>
-                    </Card>
+                {products?.map((product, index) => (
+                    <Col className={"mt-5"}>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Img  src={product.productImg[0]} variant="top" style={{height: '250px', width: '100%'} }/>
+                            <Card.Body>
+                                <Card.Title>{product.name}</Card.Title>
+                                <Card.Text>
+                                    {product.desc[0].slice(0,5)}...
+                                </Card.Text>
+                                <Stack direction="horizontal" className={"me-lg-2"}>
+                                    {product?.category?.map(c => (
+                                        <div style={{margin: "3px"}} key={c}>
+                                            <h4>
+                                                <Badge pill bg="secondary">{c}</Badge>
+                                            </h4>
+                                        </div>
+                                    ))}
+                                </Stack>
+                                {/*<Stack direction="horizontal" className={"me-lg-2"}>*/}
+                                {/*    <div style={{margin: "3px"}} >*/}
+                                {/*        <h4>*/}
+                                {/*            ㅇㅇ*/}
+                                {/*        </h4>*/}
+                                {/*    </div>*/}
+                                {/*</Stack>*/}
+                                <Link to={`/product/${product.id}`}>
+                                    <Button>Go Detail</Button>
+                                </Link>
+                            </Card.Body>
+                        </Card>
 
-                </Col>
+                    </Col>
+                ))}
+
             </Row>
         </Container>
 
