@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useTransition , useContext} from 'react';
 import {Badge, Button, Card, Carousel, Col, Container, Row, Stack} from "react-bootstrap";
 import {Link} from "react-router-dom";
+import LocaleContext from "../LocaleContext";
 import {useFetchProducts} from "../services/fetchProducts";
-
+import { useTranslation } from "react-i18next";
+import i18n from "../lang/i18n";
 const Main = () => {
+    const { t } = useTranslation()
     const { data: products, isLoading, error } = useFetchProducts()
+    const { locale } = useContext(LocaleContext)
     console.log(products)
     if (isLoading) {
         return (
@@ -13,6 +17,29 @@ const Main = () => {
             </div>
         )
     }
+
+    const changeLocale = (l) => {
+        if (locale !== l) {
+            i18n.changeLanguage(l)
+        }
+    }
+
+    const displayLanguage = (l) => {
+        switch (l){
+            case "ko-KR":
+                return "한국어"
+            case "en-US" :
+                return "English"
+            case "jp-JP" :
+                return "日本語"
+            case "cn-CN" :
+                return "中国话"
+            default:
+                return ""
+        }
+    }
+
+
     return (
     <>
         <Carousel>
@@ -24,9 +51,9 @@ const Main = () => {
                     style={{ height : "530px"}}
                 />
                 <Carousel.Caption>
-                    <h1 style={{color: 'white', fontWeight: 'bold', fontSize: '64px', position: 'absolute',left: '50px', bottom: '100px'}}>Selling</h1>
+                    <h1 style={{color: 'white', fontWeight: 'bold', fontSize: '64px', position: 'absolute',left: '50px', bottom: '100px'}}>{t("Selling")}</h1>
                     <br/>
-                    <h3 style={{color: 'white', fontWeight: 'bold', fontSize: '25px', position: 'absolute', left: '50px', bottom: '60px'}}>"Looking for a new owner, your used item</h3>
+                    <h3 style={{color: 'white', fontWeight: 'bold', fontSize: '25px', position: 'absolute', left: '50px', bottom: '60px'}}>{t("Looking for a new owner, your used item.")}</h3>
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -38,9 +65,9 @@ const Main = () => {
                 />
 
                 <Carousel.Caption>
-                    <h1 style={{color: 'white', fontWeight: 'bold', fontSize: '64px', position: 'absolute',left: '50px', bottom: '100px'}}>real estate</h1>
+                    <h1 style={{color: 'white', fontWeight: 'bold', fontSize: '64px', position: 'absolute',left: '50px', bottom: '100px'}}>{t("real estate")}</h1>
                     <br/>
-                    <h3 style={{color: 'white', fontWeight: 'bold', fontSize: '25px', position: 'absolute', left: '50px', bottom: '60px'}}>Meet your dream at the Korean Market!</h3>
+                    <h3 style={{color: 'white', fontWeight: 'bold', fontSize: '25px', position: 'absolute', left: '50px', bottom: '60px'}}>{t("Meet your dream at the Korean Market!"``)}</h3>
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -52,15 +79,15 @@ const Main = () => {
                 />
 
                 <Carousel.Caption>
-                    <h1 style={{color: 'white', fontWeight: 'bold', fontSize: '64px', position: 'absolute',left: '50px', bottom: '100px'}}>Job</h1>
+                    <h1 style={{color: 'white', fontWeight: 'bold', fontSize: '64px', position: 'absolute',left: '50px', bottom: '100px'}}>{t("Job")}</h1>
                     <br/>
-                    <h3 style={{color: 'white', fontWeight: 'bold', fontSize: '25px', position: 'absolute', left: '50px', bottom: '60px'}}>Find a new workplace in Korea Market easily and quickly.</h3>
+                    <h3 style={{color: 'white', fontWeight: 'bold', fontSize: '25px', position: 'absolute', left: '50px', bottom: '60px'}}>{t("Find a new workplace in Korea Market easily and quickly.")}</h3>
                 </Carousel.Caption>
             </Carousel.Item>
         </Carousel>
         <Container className={"mt-5"}>
             <Row>
-                <h1 className={"mb-3"}>전체상품</h1>
+                <h1 className={"mb-3"}>{t("all products")}</h1>
                 {products?.map((product, index) => (
                     <Col className={"mt-5"}>
                         <Card style={{ width: '18rem' }}>
