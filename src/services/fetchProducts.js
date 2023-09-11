@@ -1,22 +1,27 @@
 import { productApi } from "./api";
 import {useQuery} from "@tanstack/react-query";
 
-const fetchProducts = async () => {
+const fetchProducts = async (category) => {
+    if (category) {
+        const { data } = await productApi.get(`?category=${category}`)
+        return data
+    }
     const { data } = await productApi.get("/")
-    return data.products
+    console.log("-----------",data)
+    return data
 }
+
+
 const fetchProductsByCategory = async (category) => {
     const { data } = await productApi.get(`?category=${category}`)
-    return data.prodcuts
+    console.log("llllllllll", data)
+    return data
 }
 
-const useFetchProducts = () =>
-    useQuery(["products"], () => fetchProducts(), {
+const useFetchProducts = (category) =>
+    useQuery(category ? ['products'] : ['products', category], () => fetchProducts(category), {
         keepPreviousData: true,
     });
-const useFetchtProdcutsByCategory = (category) =>
-    useQuery(["products", category], () => fetchProductsByCategory(category), {
-        keepPreviousData: true,
-    })
 
-export {useFetchProducts, useFetchtProdcutsByCategory}
+
+export {useFetchProducts}

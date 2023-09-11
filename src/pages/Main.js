@@ -5,6 +5,14 @@ import {useFetchProducts} from "../services/fetchProducts";
 
 const Main = () => {
     const { data: products, isLoading, error } = useFetchProducts()
+    console.log(products)
+    if (isLoading) {
+        return (
+            <div>
+                <h1>Loading</h1>
+            </div>
+        )
+    }
     return (
     <>
         <Carousel>

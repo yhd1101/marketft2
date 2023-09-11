@@ -1,14 +1,29 @@
-import React from 'react';
-import {Col, Container, Row, Image, ListGroup, Button, Card} from "react-bootstrap";
+import {Col, Container, Row, Image, ListGroup, Button, Card, InputGroup, Form} from "react-bootstrap";
 import {Link, useParams} from "react-router-dom";
 import {useFetchProductById} from "../services/fetchProductById";
 import MapContainer from "../components/Map";
+import {useForm} from "react-hook-form";
+import useCommentCreateUser from "../services/commentCreate";
+import {useFetchProducts} from "../services/fetchProducts";
 
 const ProductDetail = () => {
     const {productId} = useParams()
+    const { register, handleSubmit } = useForm()
+    const { mutateAsync, isLoading: commentCreateLoading } = useCommentCreateUser()
     const { data: product, isLoading, error } = useFetchProductById(productId)
-    // const { data: categoryProduct } = useFetchtProdcutsByCategory(product.category[0])
-    if (isLoading) {
+    const { data: products, isLoading: productsLoading } = useFetchProducts()
+
+    const onSubmit = async (values) => {
+        const userInput = {
+            ...values,
+            product: productId,
+        }
+        console.log(userInput)
+        await mutateAsync(userInput)
+    }
+
+
+    if (isLoading || commentCreateLoading) {
         return (
             <div>
                 <h1>loading</h1>
@@ -82,6 +97,63 @@ const ProductDetail = () => {
                         </Col>
                     </Row>
                 </Row>
+            </Container>
+            <Container>
+                <h3>관련상품</h3>
+                <Row className={"mt-4"}>
+                    <Col md={"auto"}>
+                        <Card style={{ width: '18rem' }}>
+                            <Card.Img variant="top" style={{height: '250px', width: '100%'}} />
+                            <Card.Body>
+                                <Card.Title>상품이름</Card.Title>
+                                <Card.Text>
+                                    내용...
+                                </Card.Text>
+                                {/*<Button onClick={() => navigate(`/product/${product._id}`)}>Go Detail</Button>*/}
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </Container>
+            <br/>
+            <Container>
+                <h3>댓글</h3>
+                    <Row className={"mt-4"}>
+                        <Form onSubmit={handleSubmit(onSubmit)}>
+                            <Col md={"auto"}>
+                                <Container>
+
+                                        {product?.comments?.map((comment, index) => (
+                                            <Row key={index}>
+                                                <Col>
+                                                    <ListGroup variant={"flush"}>
+                                                        <ListGroup.Item>
+                                                            <h5>이름:{comment.user.name}</h5>
+                                                        </ListGroup.Item>
+                                                    </ListGroup>
+                                                </Col>
+                                                <Col xs={6}>댓글내용: {comment.desc}
+                                                </Col>
+                                            </Row>
+                                        ))}
+
+                                </Container>
+                                <InputGroup className="mb-3">
+                                        <Form.Control
+                                            aria-label="Example text with button addon"
+                                            aria-describedby="basic-addon1"
+                                            {...register("desc", {required: true})}
+                                        />
+                                        <Button
+                                            variant="outline-secondary"
+                                            type={"submit"}
+                                        >
+                                            Button
+                                        </Button>
+                                </InputGroup>
+                            </Col>
+                        </Form>
+                    </Row>
             </Container>
         </>
 

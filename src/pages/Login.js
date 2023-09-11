@@ -42,7 +42,7 @@ const Login = () => {
                 <Container>
                     <Row className={"justify-content-md-center mt-5"}>
                         <Col xs lg="3">
-                            <Button variant={"link"} onClick={() => navigate("/FindPassword")}>
+                            <Button variant={"link"} onClick={() => navigate("/forgot/password")}>
                                 Find password
                             </Button>
                         </Col>

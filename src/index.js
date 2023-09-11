@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import reportWebVitals from './reportWebVitals';
 import {ReactQueryProvider} from "./Provider";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import "primereact/resources/themes/lara-light-indigo/theme.css";  //theme
+import "primereact/resources/primereact.min.css";                  //core css
+import "primeicons/primeicons.css";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(

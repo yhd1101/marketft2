@@ -9,4 +9,8 @@ const authApi = axios.create({
     baseURL: "http://localhost:8000/api/auth"
 })
 
-export  {productApi, authApi}
+const commentApi = axios.create({
+    baseURL: "http://localhost:8000/api/comment"
+})
+
+export  {productApi, authApi, commentApi}
