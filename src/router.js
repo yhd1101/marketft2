@@ -6,6 +6,7 @@ import Login from "./pages/Login";
 import FindPassword from "./pages/FindPassword"
 import ProductRegister from "./pages/ProductRegister";
 import PasswordChagne from "./pages/PasswordChagne";
+import Profile from "./pages/Profile";
 const router = createBrowserRouter([
     {
         path: "/",
@@ -34,6 +35,10 @@ const router = createBrowserRouter([
     {
         path:"/change/password",
         element: <PasswordChagne/>
+    },
+    {
+        path: "/userinfo/:id",
+        element: <Profile/>
     }
 ])
 export default router

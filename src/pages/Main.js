@@ -67,7 +67,7 @@ const Main = () => {
                 <Carousel.Caption>
                     <h1 style={{color: 'white', fontWeight: 'bold', fontSize: '64px', position: 'absolute',left: '50px', bottom: '100px'}}>{t("real estate")}</h1>
                     <br/>
-                    <h3 style={{color: 'white', fontWeight: 'bold', fontSize: '25px', position: 'absolute', left: '50px', bottom: '60px'}}>{t("Meet your dream at the Korean Market!"``)}</h3>
+                    <h3 style={{color: 'white', fontWeight: 'bold', fontSize: '25px', position: 'absolute', left: '50px', bottom: '60px'}}>{t("Meet your dream at the Korean Market!")}</h3>
                 </Carousel.Caption>
             </Carousel.Item>
             <Carousel.Item>
@@ -114,7 +114,7 @@ const Main = () => {
                                 {/*    </div>*/}
                                 {/*</Stack>*/}
                                 <Link to={`/product/${product.id}`}>
-                                    <Button>Go Detail</Button>
+                                    <Button>{t("Go Detail")}</Button>
                                 </Link>
                             </Card.Body>
                         </Card>

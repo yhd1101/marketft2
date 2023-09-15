@@ -52,6 +52,8 @@ const Header = () => {
                             <Nav.Link  href={"/signup"}>{t("Signup")}</Nav.Link>
                             <Nav.Link  href={"/login"}>
                                 {t("Login")}</Nav.Link>
+                            <Nav.Link  href={"/userinfo/:id"}>
+                                {t("profile")}</Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
                 </Container>

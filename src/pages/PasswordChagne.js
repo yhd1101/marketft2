@@ -40,7 +40,14 @@ const PasswordChagne = () => {
                         placeholder="Password"
                         {...register("newPassword", {required: true})}
                     />
+                    <br/>
+                    <Form.Control
+                        type="password"
+                        placeholder="Password"
+                        {...register("newPassword", {required: true})}
+                    />
                 </Form.Group>
+
                 <Button  variant="primary" type={"submit"} className="w-100 mt-4 mb-3">
                     비밀번호 바꾸기
                 </Button>
